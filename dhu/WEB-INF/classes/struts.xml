@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+
+    <!-- 设置上传文件大小 -->
+    <constant name="struts.multipart.maxSize" value="2097152000"></constant>
+
+    <package name="demo1" extends="json-default" namespace="/">
+        <action name="user_*" class="userAction" method="{1}">
+            <result name="ok"></result>
+        </action>
+
+        <action name="docu_upload" class="cn.itcast.action.DocuAction" method="upload">
+            <interceptor-ref name="defaultStack">
+                <param name="fileUpload.allowedExtensions">jpg,jpeg,gif,txt,doc,docx,pdf,pptx,ppt,mp4,avi</param>
+            </interceptor-ref>
+            <result name="ok" type="json">
+                <param name="root">myjson</param>
+            </result>
+        </action>
+        <action name="docu_getall" class="cn.itcast.action.DocuAction" method="getall">
+            <result name="ok" type="json">
+                <param name="root">myjson</param>
+            </result>
+        </action>
+        <action name="docu_gecount" class="cn.itcast.action.DocuAction" method="gecount">
+            <result name="ok" type="json">
+                <param name="root">myjson</param>
+            </result>
+        </action>
+        <action name="docu_geDocu" class="cn.itcast.action.DocuAction" method="geDocu">
+            <result name="ok" type="json">
+                <param name="root">myjson</param>
+            </result>
+        </action>
+        <action name="docu_delete" class="cn.itcast.action.DocuAction" method="delete">
+            <result name="ok" type="json">
+                <param name="root">myjson</param>
+            </result>
+        </action>
+
+        <action name="docu_download" class="cn.itcast.action.DocuAction" method="download">
+            <result name="ok" type="stream">
+
+                <param name="inputName">is</param>
+                <!-- attachment标示告诉浏览器是附件，不要打开 -->
+                <param name="contentDisposition">attachment;filename=${docu_name}</param>
+                <param name="bufferSize">4096</param>
+            </result>
+        </action>
+
+        <action name="docu_isexist" class="cn.itcast.action.DocuAction" method="isexist">
+            <result name="ok" type="json">
+                <param name="root">myjson</param>
+            </result>
+        </action>
+        <!--<action name="linkman_*" class="linkManAction" method="{1}">
+
+            <interceptor-ref name="defaultStack">
+
+                <param name="fileUpload.allowedExtensions">jpg,jpeg,gif,txt</param>
+            </interceptor-ref>
+
+            <result name="ok" type="json">
+                <param name="root">myjson</param>
+            </result>
+            <result name="input">"nono"</result>
+        </action>-->
+    </package>
+
+
+</struts>
